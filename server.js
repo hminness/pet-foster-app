@@ -16,6 +16,10 @@ MongoClient.connect(dbConnectionString)
         collection = db.collection('pet_info')
     })
 
+app.set('view engine','ejs')
+app.use(express.static('public'))
+app.use(express.urlencoded({extended:true}))
+
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`Server is online`)
 })
