@@ -10,12 +10,26 @@
 <body>
     <h2> Pets </h2>
     
-    <form action="/petInfo" method="POST">
+    <form action="/pets" method="POST">
         <input type="text" placeholder="name" name="name">
         <input type="text" placeholder="sex" name="sex">
         <input type="text" placeholder="age" name="age">
         <button type="submit">Submit</button>
     </form>
+
+    <ul class="pets">
+        <!-- Loop through quotes -->
+        <% for(var i = 0; i < pets.length; i++) {%>
+            <li class="pet">
+            <!-- Output name from the iterated quote object -->
+            <span><%= pets[i].name %></span>:
+            <!-- Output quote from the iterated quote object -->
+            <span><%= pets[i].sex %></span>
+            <!-- Output quote from the iterated quote object -->
+            <span><%= pets[i].age %></span>
+            </li>
+        <% } %>
+        </ul>
 
     <script type="text/javascript" src="/public/main.js"></script>
 </body>
