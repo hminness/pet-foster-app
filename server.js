@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { response } = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const app = express()
 require('dotenv').config()
@@ -22,50 +23,57 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cors())
 
-app.get('/', (req, res) => {
-    db.collection('quotes').find().toArray()
-      .then(quotes => {
-        res.render('index.ejs', { quotes: quotes })
-      })
-      .catch(/* ... */)
-  })
-app.post('/quotes', (req, res) => {
-quotesCollection.insertOne(req.body)
-    .then(result=> {
-        res.redirect('/')
-    })
-    .catch(error=> console.error(error))
+app.get('/', async (req, res) => {
+    try {
+        res.render('index.ejs')
+    } catch (error) {
+        console.log(error)
+        // response.status(500).send(message: error.message)
+}
+// db.collection('quotes').find().toArray()
+//     .then(quotes => {
+//     res.render('index.ejs', { quotes: quotes })
+//     })
+//     .catch(/* ... */)
 })
+
+// app.post('/quotes', (req, res) => {
+// quotesCollection.insertOne(req.body)
+//     .then(result=> {
+//         res.redirect('/')
+//     })
+//     .catch(error=> console.error(error))
+// })
 app.listen(process.env.PORT || PORT, ()=>{
 console.log(`Server is online`)
 }) 
-app.put('/quotes', (req, res) => {
-quotesCollection.findOneAndUpdate(
-    { name: 'Yoda' },
-    {
-        $set: {
-        name: req.body.name,
-        quote: req.body.quote
-        }
-    },
-    {
-        upsert: true
-    }
-)
-.then(result => {e
-    res.json('Success')
-    })
-.catch(error => console.error(error))
-})
-  app.delete('/quotes', (req,res) => {
-    quotesCollection.deleteOne(
-        { name: req.body.name }
-    )
-    .then(result => {
-      if (result.deletedCount === 0) {
-          return res.json('No quote to delete')
-      }
-      res.json(`Deleted Darth Vader's quote`)
-     })
-    .catch(error => console.error(error))
-  })
+// app.put('/quotes', (req, res) => {
+// quotesCollection.findOneAndUpdate(
+//     { name: 'Yoda' },
+//     {
+//         $set: {
+//         name: req.body.name,
+//         quote: req.body.quote
+//         }
+//     },
+//     {
+//         upsert: true
+//     }
+// )
+// .then(result => {e
+//     res.json('Success')
+//     })
+// .catch(error => console.error(error))
+// })
+//   app.delete('/quotes', (req,res) => {
+//     quotesCollection.deleteOne(
+//         { name: req.body.name }
+//     )
+//     .then(result => {
+//       if (result.deletedCount === 0) {
+//           return res.json('No quote to delete')
+//       }
+//       res.json(`Deleted Darth Vader's quote`)
+//      })
+//     .catch(error => console.error(error))
+//   })
