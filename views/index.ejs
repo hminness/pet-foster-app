@@ -5,12 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foster App</title>
+    <link rel="stylesheet" href="/public/normalize.css">
     <link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
     <h2> Pets </h2>
     
     <form action="/pets" method="POST">
+        <label for="species-select">What:</label>
+
+        <select name="pets" id="pet-select">
+            <option value="">--Please choose an option--</option>
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+            <option value="hamster">Hamster</option>
+            <option value="parrot">Parrot</option>
+            <option value="spider">Spider</option>
+            <option value="goldfish">Goldfish</option>
+        </select>
         <input type="text" placeholder="name" name="name">
         <input type="text" placeholder="sex" name="sex">
         <input type="text" placeholder="age" name="age">
@@ -29,7 +41,7 @@
             <span><%= pets[i].age %></span>
             </li>
         <% } %>
-        </ul>
+    </ul>
 
     <script type="text/javascript" src="/public/main.js"></script>
 </body>
