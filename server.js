@@ -6,17 +6,13 @@ const app = express()
 require('dotenv').config()
 const dbConnectionString = process.env.DB_STRING
 
-let db,
-    dbName = 'pet_data',
-    collection
-
 MongoClient.connect(dbConnectionString)
     .then(client => {
         console.log('Connected to db')
-        db = client.db(dbName);
-        collection = db.collection('pet_info')
+        const db = client.db('pet_data');
+        const petsCollection = db.collection('pet_info')
         app.set('view engine','ejs')
-        app.use(express.static('public'))
+        app.use(express.static(__dirname + '/public'))
         app.use(express.urlencoded({extended:true}))
         app.use(express.json())
         app.use(cors())
@@ -26,7 +22,7 @@ MongoClient.connect(dbConnectionString)
             .then(pets => {
                 res.render('index.ejs', { pets: pets })
             })
-            .catch(/* ... */)
+            .catch(error => console.error(error))
         })
 // app.get('/', async (req, res) => {
 //     try {
